@@ -80,3 +80,25 @@ app.post('/api/shorturl/new', (req, res) => {
         })
     }
 })
+
+
+ /*============= 3. Create the API routes post and get methods. ===========*/
+// get method
+
+app.get('/api/shorturl/:url', ( req, res) => {
+    
+    let input_url = req.params.url;
+    // console.log(input_url);
+
+    // search in the databes 
+    // find one by short_url
+    // retrive data
+
+    // redicred the user to the correspoing original url
+
+    URL.findOne({short_url: input_url}, (err, data) => {
+        if (err) res.send(err)
+        // console.log(data);
+        res.redirect(data.original_url)
+    })
+})
