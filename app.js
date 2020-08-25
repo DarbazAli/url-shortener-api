@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const mongodb = require('mongodb');
 const validUrl = require('valid-url');
 const shortID = require('shortid');
-const podyParser = require('body-parser');
 const bodyParser = require('body-parser');
-const Schema = mongoose.Schema;
+
+const URL = require('./Schema').URL;
 
 require('dotenv').config();
 
@@ -53,12 +53,7 @@ mongoose.connect(MONGO_URL, {
 
 
  /*============= 2. Create the URL Model ===========*/
-const urlSchema = new Schema({
-    original_url: String,
-    short_url: String
-})
 
-const URL = mongoose.model('URL', urlSchema);
 
 
  /*============= 3. Create the API routes post and get methods. ===========*/
