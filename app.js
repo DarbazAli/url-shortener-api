@@ -1,7 +1,11 @@
 const express = require('express')
 const mongoose = require('mongoose');
 const mongodb = require('mongodb');
-const Schema = mongodb.Schema;
+const validUrl = require('valid-url');
+const shortID = require('shortid');
+const podyParser = require('body-parser');
+const bodyParser = require('body-parser');
+const Schema = mongoose.Schema;
 
 require('dotenv').config();
 
@@ -15,6 +19,7 @@ app.set('view engine', 'pug');
 
 // serve static files
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({extended:false}))
 
 // create the home url
 app.get('/', (req, res) => {
@@ -47,7 +52,7 @@ mongoose.connect(MONGO_URL, {
 
 
 
- /*============= 2. CCreate the URL Model ===========*/
+ /*============= 2. Create the URL Model ===========*/
 const urlSchema = new Schema({
     original_url: String,
     short_url: String
@@ -55,3 +60,19 @@ const urlSchema = new Schema({
 
 const URL = mongoose.model('URL', urlSchema);
 
+
+ /*============= 3. Create the API routes post and get methods. ===========*/
+// post to new url
+
+app.post('/api/shorturl/new', (req, res) => {
+
+    const url = req.body.url_input;
+    const urlCode = shortID.generate();
+
+    // check if url is valid or not
+    if ( !validUrl.isWebUri(url) ) {
+        res.status(401).json({ error: "invalid URL"})
+    } else {
+        console.log(url);
+    }
+})
