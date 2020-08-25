@@ -4,6 +4,7 @@ const mongodb = require('mongodb');
 const validUrl = require('valid-url');
 const shortID = require('shortid');
 const bodyParser = require('body-parser');
+const cors = require('cors')
 
 const URL = require('./Schema').URL;
 
@@ -20,6 +21,7 @@ app.set('view engine', 'pug');
 // serve static files
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended:false}))
+app.use(cors())
 
 // create the home url
 app.get('/', (req, res) => {
