@@ -102,3 +102,12 @@ app.get('/api/shorturl/:url', ( req, res) => {
         res.redirect(data.original_url)
     })
 })
+
+
+ /*============= GET URL LIST ===========*/
+ app.get('/list', (req, res) => {
+     URL.find((err, data) => {
+         err ? res.send(err): null;
+         res.render('index', {data: data})
+     })
+ })

@@ -8,5 +8,6 @@ table(class="u-full-width")
         for url in data
             tr
                 td= url.original_url
-                td= url.short_ulr
+                td
+                    a(href=`${url.original_url}`) #{url.short_url}
                 
