@@ -76,7 +76,8 @@ app.post('/api/shorturl/new', (req, res) => {
 
         newURL.save((err, data) => {
             if (err) res.send(err)
-            res.send("success")
+            // res.send("success")
+            res.redirect('/list')
         })
     }
 })
