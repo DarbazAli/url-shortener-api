@@ -1,5 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose');
+const mongodb = require('mongodb');
+const Schema = mongodb.Schema;
 
 require('dotenv').config();
 
@@ -25,16 +27,17 @@ app.get('/about', (req, res) => {
 
 /*============= OUTLINE ===========*/
 /* 
-  Create a MongoDB database on MongoDB Atlas.
-  Install all the required npm packages.
-  Define the environment variables.
-  Create an express server.
-  Connect to the database.
+  Create a MongoDB database on MongoDB Atlas. -> DONE
+  Install all the required npm packages. -> DONE
+  Define the environment variables. -> DONE
+  Create an express server. -> DONE
+  Connect to the database. -> DONE
   Create the URL Model.
   Create the API routes post and get methods.
  */
 
- // 1. Create a MongoDB database on MongoDB Atlas.
+
+ /*============= 1. Create a MongoDB database on MongoDB Atlas. ===========*/
 const MONGO_URL = process.env.MONGO_URL;
 mongoose.connect(MONGO_URL, {
     useNewUrlParser: true,
@@ -42,4 +45,13 @@ mongoose.connect(MONGO_URL, {
     serverSelectionTimeoutMS: 5000
 })
 
+
+
+ /*============= 2. CCreate the URL Model ===========*/
+const urlSchema = new Schema({
+    original_url: String,
+    short_url: String
+})
+
+const URL = mongoose.model('URL', urlSchema);
 
