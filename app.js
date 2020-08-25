@@ -68,6 +68,15 @@ app.post('/api/shorturl/new', (req, res) => {
     if ( !validUrl.isWebUri(url) ) {
         res.status(401).json({ error: "invalid URL"})
     } else {
-        console.log(url);
+        // save to databse
+        const newURL = new URL({
+            original_url: url,
+            short_url: urlCode
+        })
+
+        newURL.save((err, data) => {
+            if (err) res.send(err)
+            res.send("success")
+        })
     }
 })
