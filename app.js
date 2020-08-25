@@ -1,4 +1,7 @@
 const express = require('express')
+const mongoose = require('mongoose');
+
+require('dotenv').config();
 
 const app = express();
 
@@ -32,5 +35,11 @@ app.get('/about', (req, res) => {
  */
 
  // 1. Create a MongoDB database on MongoDB Atlas.
+const MONGO_URL = process.env.MONGO_URL;
+mongoose.connect(MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000
+})
 
- 
+
