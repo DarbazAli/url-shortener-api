@@ -1,0 +1,12 @@
+table(class="u-full-width")
+    thead
+        tr
+            th URL
+            th Short URL
+
+    tbody
+        for url in data
+            tr
+                td= url.original_url
+                td= url.short_ulr
+                
