@@ -45,7 +45,7 @@ app.get('/about', (req, res) => {
 
 
  /*============= 1. Create a MongoDB database on MongoDB Atlas. ===========*/
-const MONGO_URL = process.env.MONGO_URL;
+const MONGO_URL = process.env.MONGO_URL_LOCAL;
 mongoose.connect(MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -70,17 +70,26 @@ app.post('/api/shorturl/new', (req, res) => {
     if ( !validUrl.isWebUri(url) ) {
         res.status(401).json({ error: "invalid URL"})
     } else {
-        // save to databse
-        const newURL = new URL({
-            original_url: url,
-            short_url: urlCode
-        })
+        // check if url is exist?
+        const isExist = URL.count({original_url: url}, (err, count) =>  {
+            if ( count > 0) {
+                res.status(401).redirect('/list')
+            }
+            else {
+                // save to databse
+                const newURL = new URL({
+                    original_url: url,
+                    short_url: urlCode
+                })
 
-        newURL.save((err, data) => {
-            if (err) res.send(err)
-            // res.send("success")
-            res.redirect('/list')
+                newURL.save((err, data) => {
+                    if (err) res.send(err)
+                    // res.send("success")
+                    res.redirect('/list')
+                })
+            }
         })
+            
     }
 })
 
